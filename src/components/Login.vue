@@ -16,8 +16,6 @@ export default {
 
 <style scoped>
 
-@import url('https://fonts.googleapis.com/css?family=Squada+One&display=swap');
-
 .login img{
   width: 250px;
   margin-bottom: 20px;
