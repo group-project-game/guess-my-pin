@@ -1,8 +1,8 @@
 <template>
   <div class="room-card">
-    <h1>Room name</h1>
+    <h1>{{ room.name }}</h1>
     <form @submit.prevent="joinRoom">
-      <input type="text" placeholder="Room key...">
+      <input type="text" placeholder="Room key..." v-model="key">
       <button type="submit">Join</button>
     </form>
   </div>
@@ -10,7 +10,18 @@
 
 <script>
 export default {
-
+  name: 'RoomCard',
+  props: ['room'],
+  data() {
+    return {
+      key: ''
+    }
+  },
+  methods: {
+    joinRoom() {
+      this.$store.dispatch('joinRoom', this.key)
+    }
+  }
 }
 </script>
 
@@ -39,6 +50,8 @@ form input{
   margin-bottom: 10px;
   padding: 10px;
   text-align: center;
+  font-size: 14pt;
+  font-weight: bold;
 }
 form input:focus{
   outline: none;
