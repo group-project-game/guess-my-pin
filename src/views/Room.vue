@@ -6,7 +6,11 @@
       <AddRoom v-if="isShowAdd" @close="toggleAddRoomForm"></AddRoom>
     </div>
     <div class="room-content">
-      <RoomCard></RoomCard>
+      <RoomCard
+        v-for="(room, index) in this.$store.state.rooms"
+        :key="index"
+        :room="room">
+      </RoomCard>
     </div>
   </div>
 </template>

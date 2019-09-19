@@ -2,8 +2,8 @@
   <div class="add-room">
     <div class="add">
       <form @submit.prevent="createRoom">
-        <h1>Add new room</h1>
-        <input type="text" placeholder="Room name">
+        <p class="error" v-if="error">{{message}}</p>
+        <input type="text" placeholder="Room name" v-model="name">
         <button type="submit">Create</button>
         <button @click="closeForm()" class="btn-secondary">Close</button>
       </form>
@@ -14,12 +14,38 @@
 <script>
 export default {
   name: 'AddRoom',
+  data() {
+    return {
+      name: '',
+      error: false,
+      message: ''
+    }
+  },
   methods: {
     createRoom() {
-
+      if(this.validateRoomName(this.name)) {
+        this.$store.dispatch('createRoom', {
+          name: this.name
+        })
+        this.closeForm()
+      }else{
+        this.error = true
+        this.message = 'Room name invalid'
+        setTimeout( () => {
+          this.error = false
+          this.message = ''
+        }, 2000)
+      }
     },
     closeForm() {
       this.$emit('close')
+    },
+    validateRoomName(name) {
+      if(name.length < 5 || name.length > 20) {
+        return false
+      }else{
+        return true
+      }
     }
   }
 }
@@ -40,7 +66,7 @@ export default {
 .add{
   background-color: #ffffff;
   border-radius: 10px;
-  padding: 10px;
+  padding: 30px 10px;
   box-shadow: 0 0 20px 10px rgba(0,0,0,.2);
   position: relative;
 }
@@ -88,5 +114,14 @@ form button:active{
   background-color: #ffffff;
   border: 2px solid #ffc933;
   margin-top: 20px;
+}
+.error{
+  font-family: 'Squada One', cursive;
+  color: #ff3333;
+  font-size: 16pt;
+  padding: 10px;
+  border: 2px solid #ff3333;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 </style>
