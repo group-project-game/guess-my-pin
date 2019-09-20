@@ -1,9 +1,10 @@
 <template>
 <div class="background">
+  <Score></Score>
   <div class="mechine">
       <div class="game">
-      <Atm></Atm>
-      <Keyboard></Keyboard>
+      <Atm :answer='answer' ></Atm>
+      <Keyboard @beforeSubmit="playing" @submit="check"></Keyboard>
       </div>
       <div class="ornament">
           <Fancy></Fancy>
@@ -16,16 +17,21 @@
 import Atm from '../components/Atm.vue'
 import Keyboard from '../components/Keyboard.vue'
 import Fancy from '../components/Fancy.vue'
+import Score from '../components/Score.vue'
 
 export default {
+  data() {
+    return {
+      answer : ''
+    }
+  },
   created() {
-    //this.$store.dispatch('fillPlayer', this.$route.params.id)
-    this.$store.dispatch("findRoomState", this.$route.params.id);
+    this.$store.dispatch("setRoomStatus", this.$route.params.id);
     this.playSound()
   },
   methods: {
     playSound() {
-      let audio = new Audio(require("../assets/bg-2.mp3"));
+      let audio = new Audio(require("../assets/bg-1.mp3"));
       audio.addEventListener(
         "ended",
         function() {
@@ -35,10 +41,20 @@ export default {
         false
       );
       audio.play();
+    },
+    playing(input){
+      this.answer = input
+    },
+    check(){
+      console.log('ini logic checker harusnya');
+      // if (this.answer === '000'){
+      //   console.log(true) 
+      // }
+        this.answer = ''
     }
   },
   components : {
-        Atm, Keyboard, Fancy
+        Atm, Keyboard, Fancy, Score
     }
 };
 </script>
@@ -51,10 +67,9 @@ export default {
     justify-content: center;
     align-items: center;
     background: url(https://image.freepik.com/free-vector/shopping-mall-corridor-with-panoramic-roof_1262-16605.jpg);
-    background-size: auto 100%;
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position: left top;
-
+    background-position: center;
 }
 .mechine{
     width: 750px;

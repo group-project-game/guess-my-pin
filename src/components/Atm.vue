@@ -2,10 +2,13 @@
   <div class="atm-view">
       <div class="pin">
         <div class="pin-game">
-            {{pin}}
+            <p>{{pin}}</p>
         </div>
         <div class="answer">
             {{answer}}
+        </div>
+        <div class="time">
+            <p>{{time}}</p>
         </div>
       </div>
   </div>
@@ -13,11 +16,32 @@
 
 <script>
 export default {
+    props : ['answer'],
     data() {
         return {
-            pin : '808080',
-            answer : ''
+            pin: '',
+            pinList : ['565634','562634','565614','565604','165634'],
+            answer : '',
+            index: 0,
+            time: 3
         }
+    },
+    methods: {
+        showPin(index) {
+            this.pin = this.pinList[index]
+            setTimeout(() => {
+                this.pin = ''
+            }, 3000)
+            let interval = setInterval(() => {
+                this.time --
+                if(this.time <= 0) {
+                    clearInterval(interval)
+                }
+            }, 1000)
+        }
+    },
+    created() {
+        this.showPin(this.index)
     }
 }
 </script>
@@ -46,9 +70,19 @@ export default {
     flex-direction: column
 }
 .pin-game{
-font-size: 89px;
-color: rgb(247, 225, 31);
-text-align: center;
+    font-size: 32pt;
+    color: rgb(247, 225, 31);
+    text-align: center;
+    height: 60px;
+    position: relative;
+    width: 300px;
+    margin-bottom: 20px;
+}
+.pin-game p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 .answer{
     width: 280px;
@@ -57,5 +91,21 @@ text-align: center;
     font-size: 40px;
     color: aliceblue
 }
-
+.time{
+    margin-top: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #ffdd19;
+    border-radius: 50%;
+    position: relative;
+}
+.time p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 25pt;
+    font-family: 'Squada One', cursive;
+    color: black;
+}
 </style>

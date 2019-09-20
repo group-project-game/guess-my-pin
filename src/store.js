@@ -12,7 +12,8 @@ export default new Vuex.Store({
   state: {
     rooms: [],
     players: [],
-    standby: false
+    standby: false,
+    room: {}
   },
   mutations: {
     login(state, username) {
@@ -35,9 +36,20 @@ export default new Vuex.Store({
      setStandByState(state, payload) {
       state.standby = payload
     },
+    setRoomStatus(state, payload){
+      state.room = payload
+    }
   },
   actions: {
     createRoom({commit}, payload) {
+      let answerPin = []
+      for (let i = 0; i < 5; i++) {
+        let pin = ""
+        for(let j=0; j < 6; j++){
+          pin += Math.floor(Math.random() * (9 - 0 + 1)) + 0
+        }
+        answerPin.push(pin)
+      }
       let player = {
         username:localStorage.getItem('username'),
         score:0
@@ -47,6 +59,7 @@ export default new Vuex.Store({
           name: payload.roomName,
           key: payload.roomKey,
           players: [player],
+          answerPin: answerPin,
           status: true,
           standby: false
         })
@@ -64,6 +77,14 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    getThisRooms({commit}, payload){
+      db.collection('room').doc(payload.roomId).get()
+      .then(doc =>{
+        console.log(doc)
+      }).catch(err=>{
+        console.log(err)
+      })
     },
     getAllRooms ({
       commit
@@ -124,10 +145,10 @@ export default new Vuex.Store({
         console.log(err, "<<<<<<<<<< error get document pas join")
       })
     },
-    findRoomState(context, payload) {
+    setRoomStatus(context, payload) {
       db.collection('room').doc(payload)
         .onSnapshot(doc => {
-          context.commit('setStandByState', doc.data().standby)
+          context.commit('setRoomStatus', doc.data())
         })
     },
   }
