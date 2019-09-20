@@ -4,6 +4,7 @@
       <form @submit.prevent="createRoom">
         <p class="error" v-if="error">{{message}}</p>
         <input type="text" placeholder="Room name" v-model="name">
+        <input type="text" placeholder="Room key" v-model="key">
         <button type="submit">Create</button>
         <button @click="closeForm()" class="btn-secondary">Close</button>
       </form>
@@ -17,6 +18,7 @@ export default {
   data() {
     return {
       name: '',
+      key: '',
       error: false,
       message: ''
     }
@@ -25,7 +27,8 @@ export default {
     createRoom() {
       if(this.validateRoomName(this.name)) {
         this.$store.dispatch('createRoom', {
-          name: this.name
+          roomName: this.name,
+          roomKey: this.key
         })
         this.closeForm()
       }else{

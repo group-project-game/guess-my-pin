@@ -1,7 +1,7 @@
 <template>
   <div class="room-card">
     <h1>{{ room.name }}</h1>
-    <form @submit.prevent="joinRoom">
+    <form @submit.prevent="joinRoom(room.id)">
       <input type="text" placeholder="Room key..." v-model="key">
       <button type="submit">Join</button>
     </form>
@@ -18,8 +18,10 @@ export default {
     }
   },
   methods: {
-    joinRoom() {
-      this.$store.dispatch('joinRoom', this.key)
+    joinRoom(id) {
+      this.$store.dispatch('joinRoom', {playername: localStorage.getItem('username'),roomId: id, roomKey: this.key})
+      this.key = ''
+      this.$router.push(`/game/${id}`);
     }
   }
 }

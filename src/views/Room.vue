@@ -5,12 +5,8 @@
       <button @click="toggleAddRoomForm">Create room</button>
       <AddRoom v-if="isShowAdd" @close="toggleAddRoomForm"></AddRoom>
     </div>
-    <div class="room-content">
-      <RoomCard
-        v-for="(room, index) in this.$store.state.rooms"
-        :key="index"
-        :room="room">
-      </RoomCard>
+    <div class="roomlist">
+      <RoomList></RoomList>
     </div>
   </div>
 </template>
@@ -18,13 +14,15 @@
 <script>
 
 import RoomCard from '../components/RoomCard.vue'
+import RoomList from '../components/RoomList.vue'
 import AddRoom from '../components/AddRoom.vue'
 
 export default {
   name: 'Room',
   components: {
     RoomCard,
-    AddRoom
+    AddRoom,
+    RoomList
   },
   data() {
     return {
