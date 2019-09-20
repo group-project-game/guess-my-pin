@@ -14,16 +14,20 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
-    },
-    {
-      path: '/room',
-      name: 'room',
-      component: Room
-    },
+    }, 
     {
       path: '/game/:id',
       name: 'game',
       component: Game
+    },
+     {
+      path: '/room',
+      name: 'room',
+      component: Room
+    },
+     path : '/1/game',
+      name : 'game',
+      component : Game
     }
   ]
 })
