@@ -23,7 +23,7 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
 .fancy{
     width: 240px;
     height: 450px;
