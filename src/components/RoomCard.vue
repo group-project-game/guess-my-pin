@@ -21,7 +21,6 @@ export default {
     joinRoom(id) {
       this.$store.dispatch('joinRoom', {playername: localStorage.getItem('username'),roomId: id, roomKey: this.key})
       this.key = ''
-      this.$router.push(`/game/${id}`);
     }
   }
 }

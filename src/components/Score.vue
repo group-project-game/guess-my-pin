@@ -2,7 +2,7 @@
   <div class="score">
     <h1>Score Board</h1>
     <div class="user" v-for="(user, index) in players" :key="index">
-      <p>{{index+1 + '. ' + user.username + ' (Rp. ' + user.score * 100000 + ')'}}</p>
+      <p>{{index+1 + '. ' + user.username + ' (Rp. ' + (user.score * 100000).toLocaleString('id-IDR') + ')'}}</p>
     </div>
   </div>
 </template>
@@ -22,7 +22,9 @@ export default {
     db.collection('room').doc(this.$route.params.id)
       .onSnapshot(querySnapshot => {
         console.log(querySnapshot.data().players, '------------')
-        this.players = querySnapshot.data().players
+        this.players = querySnapshot.data().players.sort(function(a, b) {
+          return b.score - a.score
+        })
       });
   }
 }
