@@ -1,18 +1,30 @@
 <template>
   <div class="score">
     <h1>Score Board</h1>
-    <div class="user">
-      <p>1. Josprima (RP. 25.000)</p>
-      <p>2. Josprima (RP. 25.000)</p>
-      <p>3. Josprima (RP. 25.000)</p>
-      <p>4. Josprima (RP. 25.000)</p>
+    <div class="user" v-for="(user, index) in players" :key="index">
+      <p>{{index+1 + '. ' + user.username + ' (Rp. ' + user.score * 100000 + ')'}}</p>
     </div>
   </div>
 </template>
 
 <script>
-export default {
 
+import db from '../apis/firebase'
+
+export default {
+  name: 'Score',
+  data() {
+    return {
+      players: []
+    }
+  },
+  created() {
+    db.collection('room').doc(this.$route.params.id)
+      .onSnapshot(querySnapshot => {
+        console.log(querySnapshot.data().players, '------------')
+        this.players = querySnapshot.data().players
+      });
+  }
 }
 </script>
 

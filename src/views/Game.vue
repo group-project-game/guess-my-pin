@@ -3,7 +3,7 @@
   <Score></Score>
   <div class="mechine">
       <div class="game">
-      <Atm :answer='answer' ></Atm>
+      <Atm :answer='answer' :index="index"></Atm>
       <Keyboard @beforeSubmit="playing" @submit="check"></Keyboard>
       </div>
       <div class="ornament">
@@ -18,15 +18,27 @@ import Atm from '../components/Atm.vue'
 import Keyboard from '../components/Keyboard.vue'
 import Fancy from '../components/Fancy.vue'
 import Score from '../components/Score.vue'
+import db from '../apis/firebase'
 
 export default {
+  name: 'Game',
   data() {
     return {
-      answer : ''
+      index : 0,
+      answer : '',
+      pinlist : [],
+      players: []
     }
   },
   created() {
-    this.$store.dispatch("setRoomStatus", this.$route.params.id);
+    db.collection('room').doc(this.$route.params.id).get()
+      .then(doc => {
+          this.pinlist = doc.data().answerPin
+          this.players = doc.data().players
+      })
+      .catch(err => {
+          console.log(err)
+      })
     this.playSound()
   },
   methods: {
@@ -46,10 +58,32 @@ export default {
       this.answer = input
     },
     check(){
-      console.log('ini logic checker harusnya');
+      let pinNow = this.pinlist[this.index]
+      if (pinNow == this.answer){
+        for(let i=0;i<this.players.length;i++) {
+          if(this.players[i].username == localStorage.getItem('username')) {
+            this.players[i].score ++
+            console.log(this.players, '<<<<<<<<')
+            db.collection('room').doc(this.$route.params.id).update({
+              players: this.players
+            })
+            .then(response => {
+              console.log('ssdfsdf', response)
+            })
+            .catch(err => {
+              console.log('errr', err)
+            })
+          }
+        }
+        console.log('benarrrrrrrr')
+      }
+      else {
+        console.log('salahhhh')
+      }
       // if (this.answer === '000'){
       //   console.log(true) 
       // }
+      this.index++
         this.answer = ''
     }
   },
