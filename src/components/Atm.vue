@@ -23,7 +23,7 @@ export default {
             pinList : ['565634','562634','565614','565604','165634'],
             answer : '',
             index: 0,
-            time: 3
+            time: 5
         }
     },
     methods: {

@@ -41,7 +41,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    createRoom({commit}, payload) {
+    createRoom({commit, dispatch}, payload) {
       let answerPin = []
       for (let i = 0; i < 5; i++) {
         let pin = ""
@@ -63,7 +63,7 @@ export default new Vuex.Store({
           status: true,
           standby: false
         })
-        .then(function (docRef) {
+        .then((docRef) => {
           Swal.close();
           Swal.fire({
             title: "Successfully Create",
@@ -72,6 +72,8 @@ export default new Vuex.Store({
             timer: 2000,
             showConfirmButton: false
           })
+          console.log(docRef.id)
+          dispatch.setRoomStatus(docRef.id)
           router.push(`/game/${docRef.id}`)
         })
         .catch(err => {
@@ -150,6 +152,7 @@ export default new Vuex.Store({
         .onSnapshot(doc => {
           context.commit('setRoomStatus', doc.data())
         })
+        //console.log()
     },
   }
 })

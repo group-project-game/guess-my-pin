@@ -50,6 +50,9 @@ export default {
       // if (this.answer === '000'){
       //   console.log(true) 
       // }
+      //if(this.answer == this.$store){
+       console.log("benar")   
+      //}
         this.answer = ''
     }
   },
