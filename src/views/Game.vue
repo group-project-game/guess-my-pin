@@ -1,5 +1,6 @@
 <template>
 <div class="background">
+  <Score></Score>
   <div class="mechine">
       <div class="game">
       <Atm></Atm>
@@ -16,6 +17,7 @@
 import Atm from '../components/Atm.vue'
 import Keyboard from '../components/Keyboard.vue'
 import Fancy from '../components/Fancy.vue'
+import Score from '../components/Score.vue'
 
 export default {
   created() {
@@ -38,7 +40,7 @@ export default {
     }
   },
   components : {
-        Atm, Keyboard, Fancy
+        Atm, Keyboard, Fancy, Score
     }
 };
 </script>
@@ -51,10 +53,9 @@ export default {
     justify-content: center;
     align-items: center;
     background: url(https://image.freepik.com/free-vector/shopping-mall-corridor-with-panoramic-roof_1262-16605.jpg);
-    background-size: auto 100%;
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position: left top;
-
+    background-position: center;
 }
 .mechine{
     width: 750px;
