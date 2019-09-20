@@ -13,12 +13,15 @@ export default {
   name: 'Login',
   data() {
     return {
-      username: ''
+      username: '',
+      password: ''
     }
   },
   methods: {
     signin() {
-      this.$store.commit('login', this.username)
+      this.$store.dispatch('login', {
+        username : this.username
+      })
     }
   }
 }

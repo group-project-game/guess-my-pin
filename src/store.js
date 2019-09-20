@@ -4,6 +4,7 @@ import router from './router'
 
 Vue.use(Vuex)
 
+
 export default new Vuex.Store({
   state: {
     rooms: []
@@ -19,6 +20,7 @@ export default new Vuex.Store({
   },
   actions: {
     createRoom({commit}, payload) {
+
       commit('addRoom', payload)
     },
     joinRoom({commit}, payload) {
