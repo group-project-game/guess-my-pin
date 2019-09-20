@@ -26,13 +26,12 @@ export default {
     }
   },
   created() {
-    //this.$store.dispatch('fillPlayer', this.$route.params.id)
-    this.$store.dispatch("findRoomState", this.$route.params.id);
+    this.$store.dispatch("setRoomStatus", this.$route.params.id);
     this.playSound()
   },
   methods: {
     playSound() {
-      let audio = new Audio(require("../assets/bg-2.mp3"));
+      let audio = new Audio(require("../assets/bg-1.mp3"));
       audio.addEventListener(
         "ended",
         function() {

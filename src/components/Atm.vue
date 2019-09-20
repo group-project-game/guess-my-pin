@@ -24,7 +24,6 @@ export default {
             answer : '',
             index: 0,
             time: 3
-
         }
     },
     methods: {
