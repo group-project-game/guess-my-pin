@@ -13,7 +13,8 @@ export default new Vuex.Store({
     rooms: [],
     players: [],
     standby: false,
-    room: {}
+    room: {},
+    isDisabled: true
   },
   mutations: {
     login(state, username) {
@@ -38,6 +39,12 @@ export default new Vuex.Store({
     },
     setRoomStatus(state, payload){
       state.room = payload
+    },
+    enableButton(state) {
+      state.isDisabled = false
+    },
+    disableButton(state) {
+      state.isDisabled = true
     }
   },
   actions: {
@@ -63,7 +70,8 @@ export default new Vuex.Store({
           status: true,
           standby: false
         })
-        .then((docRef) => {
+        .then(function (docRef) {
+          commit('setRoomStatus', docRef.data())
           Swal.close();
           Swal.fire({
             title: "Successfully Create",
@@ -115,9 +123,6 @@ export default new Vuex.Store({
       }
       db.collection('room').doc(payload.roomId).get()
       .then(doc =>{
-        console.log("><<<<<<<<<<<<<, hasil get")
-        console.log(payload)
-        console.log(doc.data())
         if(doc.data().key == payload.roomKey){
           return db.collection('room').doc(payload.roomId).update({
             players: firebase.firestore.FieldValue.arrayUnion(player)
@@ -131,8 +136,7 @@ export default new Vuex.Store({
             } else {
               console.log('Successfuly join room')
             }
-            commit('setPlayers', doc.data().players)
-            console.log(this.state.players)
+            commit('setRoomStatus', doc.data())
           })
         } else {
           Swal.fire({

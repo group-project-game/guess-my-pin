@@ -15,33 +15,53 @@
 </template>
 
 <script>
+
+import db from '../apis/firebase'
+
 export default {
-    props : ['answer'],
+    name: 'ATM',
+    props : ['answer', 'index'],
     data() {
         return {
             pin: '',
-            pinList : ['565634','562634','565614','565604','165634'],
-            answer : '',
-            index: 0,
-            time: 5
+            time: 4,
+            pinlist: []
         }
     },
     methods: {
         showPin(index) {
-            this.pin = this.pinList[index]
+            this.pin = this.pinlist[index]
             setTimeout(() => {
                 this.pin = ''
-            }, 3000)
+                this.$store.commit('enableButton')
+            }, 4000)
             let interval = setInterval(() => {
                 this.time --
                 if(this.time <= 0) {
+                    this.time = 4
                     clearInterval(interval)
                 }
             }, 1000)
+        },
+        nextIndex(){
+            this.$store.commit('disableButton')
+            this.showPin(this.index)
         }
     },
     created() {
-        this.showPin(this.index)
+        db.collection('room').doc(this.$route.params.id).get()
+        .then(doc => {
+            this.pinlist = doc.data().answerPin
+            this.showPin(this.index)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    },
+    watch: {
+        index() {
+            this.nextIndex()
+        }
     }
 }
 </script>
