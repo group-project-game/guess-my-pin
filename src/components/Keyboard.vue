@@ -2,26 +2,26 @@
   <div class="wrapper">
     <div class="keyboard">
       <div>
-        <button @click="clickKey(1)">1</button>
-        <button @click="clickKey(2)">2</button>
-        <button @click="clickKey(3)">3</button>
+        <button @click="clickKey(1)" :disabled="$store.state.isDisabled">1</button>
+        <button @click="clickKey(2)" :disabled="$store.state.isDisabled">2</button>
+        <button @click="clickKey(3)" :disabled="$store.state.isDisabled">3</button>
       </div>
       <div>
-        <button @click="clickKey(4)">4</button>
-        <button @click="clickKey(5)">5</button>
-        <button @click="clickKey(6)">6</button>
+        <button @click="clickKey(4)" :disabled="$store.state.isDisabled">4</button>
+        <button @click="clickKey(5)" :disabled="$store.state.isDisabled">5</button>
+        <button @click="clickKey(6)" :disabled="$store.state.isDisabled">6</button>
       </div>
       <div>
-        <button @click="clickKey(7)">7</button>
-        <button @click="clickKey(8)">8</button>
-        <button @click="clickKey(9)">9</button>
+        <button @click="clickKey(7)" :disabled="$store.state.isDisabled">7</button>
+        <button @click="clickKey(8)" :disabled="$store.state.isDisabled">8</button>
+        <button @click="clickKey(9)" :disabled="$store.state.isDisabled">9</button>
       </div>
       <div>
-        <button @click="clickKey(0)">0</button>
+        <button @click="clickKey(0)" :disabled="$store.state.isDisabled">0</button>
       </div>
     </div>
     <div class="submit">
-      <button name="submit" @click="submitAnswer">Submit</button>
+      <button name="submit" @click="submitAnswer" :disabled="$store.state.isDisabled">Submit</button>
     </div>
   </div>
 </template>
