@@ -21,6 +21,7 @@
       </div>
     </div>
     <div class="submit">
+        <button name="submit" :disabled="$store.state.isDisabled" @click="clearInput">Clear</button>
       <button name="submit" @click="submitAnswer" :disabled="$store.state.isDisabled">Submit</button>
     </div>
   </div>
@@ -56,6 +57,10 @@ export default {
         false
       );
       audio.play();
+    },
+    clearInput(){
+        this.answer = ''
+        this.$emit("beforeSubmit", this.answer);
     }
   }
 };
