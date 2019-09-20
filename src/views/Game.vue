@@ -1,14 +1,22 @@
 <template>
 <div class="background">
+  <div class="game-result" v-if="isSubmit">
+    <div class="result win" v-if="result">
+      <img src="../assets/win.gif" alt="" srcset="">
+    </div>
+    <div class="result lose" v-else>
+      <img src="../assets/lose.gif" alt="" srcset="">
+    </div>
+  </div>
   <Score></Score>
   <div class="mechine">
-      <div class="game">
-      <Atm :answer='answer' :index="index"></Atm>
-      <Keyboard @beforeSubmit="playing" @submit="check"></Keyboard>
-      </div>
-      <div class="ornament">
-          <Fancy></Fancy>
-      </div>
+    <div class="game">
+    <Atm :answer='answer' :index="index"></Atm>
+    <Keyboard @beforeSubmit="playing" @submit="check"></Keyboard>
+    </div>
+    <div class="ornament">
+        <Fancy></Fancy>
+    </div>
   </div>
 </div>
 </template>
@@ -27,7 +35,9 @@ export default {
       index : 0,
       answer : '',
       pinlist : [],
-      players: []
+      players: [],
+      isSubmit: false,
+      result: null
     }
   },
   created() {
@@ -43,7 +53,7 @@ export default {
   },
   methods: {
     playSound() {
-      let audio = new Audio(require("../assets/bg-1.mp3"));
+      let audio = new Audio(require("../assets/bg-2.mp3"));
       audio.addEventListener(
         "ended",
         function() {
@@ -58,8 +68,13 @@ export default {
       this.answer = input
     },
     check(){
+      setTimeout(() => {
+        this.isSubmit = false
+      }, 3000)
+      this.isSubmit = true
       let pinNow = this.pinlist[this.index]
       if (pinNow == this.answer){
+        this.result = true
         for(let i=0;i<this.players.length;i++) {
           if(this.players[i].username == localStorage.getItem('username')) {
             this.players[i].score ++
@@ -78,6 +93,7 @@ export default {
         console.log('benarrrrrrrr')
       }
       else {
+        this.result = false
         console.log('salahhhh')
       }
       // if (this.answer === '000'){
@@ -123,5 +139,33 @@ export default {
 
 .ornament{
     margin-top: 18%;
+}
+.game-result{
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0,.7);
+}
+.result{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.lose{
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.lose img{
+  width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
