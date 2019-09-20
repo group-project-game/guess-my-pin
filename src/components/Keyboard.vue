@@ -2,19 +2,19 @@
 <div class="wrapper">
   <div class="keyboard">
       <div>
-      <button value="1">1</button>
-      <button value="2">2</button>
-      <button value="3">3</button>
+      <button value="1" @click="playSound">1</button>
+      <button value="2" @click="playSound">2</button>
+      <button value="3" @click="playSound">3</button>
       </div>
       <div>
-      <button value="4">4</button>
-      <button value="5">5</button>
-      <button value="6">6</button>
+      <button value="4" @click="playSound">4</button>
+      <button value="5" @click="playSound">5</button>
+      <button value="6" @click="playSound">6</button>
       </div>
       <div>
-      <button value="7">7</button>
-      <button value="8">8</button>
-      <button value="9">9</button>
+      <button value="7" @click="playSound">7</button>
+      <button value="8" @click="playSound">8</button>
+      <button value="9" @click="playSound">9</button>
       </div>
   </div>
   <div class="submit">
@@ -25,7 +25,21 @@
 
 <script>
 export default {
-
+methods:{
+    playSound() {
+      console.log("harusnya bunyi")
+      let audio = new Audio(require("../assets/phone_number.wav"));
+      audio.addEventListener(
+        "",
+        function() {
+          this.currentTime = 0;
+          this.play();
+        },
+        false
+      );
+      audio.play();
+    }
+}
 }
 </script>
 

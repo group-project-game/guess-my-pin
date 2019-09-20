@@ -15,7 +15,7 @@
 export default {
     data() {
         return {
-            pin : '808080',
+            pin : [],
             answer : ''
         }
     }
