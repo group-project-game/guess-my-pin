@@ -27,7 +27,7 @@
 export default {
 
 }
-</script scoped>
+</script>
 
 <style scoped>
 .wrapper{
