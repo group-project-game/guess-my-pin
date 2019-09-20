@@ -53,6 +53,10 @@ export default {
     flex-direction: column;
 }
 
+.ornament{
+    margin-top: 18%;
+}
+
 
 
 </style>

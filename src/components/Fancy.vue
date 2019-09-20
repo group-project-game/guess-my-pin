@@ -25,7 +25,6 @@ export default {};
 
 <style>
 .fancy{
-    margin-top: 18%;
     width: 240px;
     height: 450px;
     display: flex;
