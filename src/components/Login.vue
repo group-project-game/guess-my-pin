@@ -19,9 +19,7 @@ export default {
   },
   methods: {
     signin() {
-      this.$store.dispatch('login', {
-        username : this.username
-      })
+      this.$store.commit('login', this.username)
     }
   }
 }

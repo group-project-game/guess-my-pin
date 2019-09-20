@@ -18,7 +18,7 @@ export default {
             pin : '808080',
             answer : ''
         }
-    },
+    }
 }
 </script>
 
