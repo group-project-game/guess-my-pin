@@ -18,10 +18,30 @@ import Keyboard from '../components/Keyboard.vue'
 import Fancy from '../components/Fancy.vue'
 
 export default {
-    components : {
+  created() {
+    //this.$store.dispatch('fillPlayer', this.$route.params.id)
+    this.$store.dispatch("findRoomState", this.$route.params.id);
+    console.log(this.$route.params);
+    this.playSound()
+  },
+  methods: {
+    playSound() {
+      let audio = new Audio(require("../assets/bg-2.mp3"));
+      audio.addEventListener(
+        "ended",
+        function() {
+          this.currentTime = 0;
+          this.play();
+        },
+        false
+      );
+      audio.play();
+    }
+  },
+  components : {
         Atm, Keyboard, Fancy
     }
-}
+};
 </script>
 
 <style scoped>
@@ -56,7 +76,4 @@ export default {
 .ornament{
     margin-top: 18%;
 }
-
-
-
 </style>

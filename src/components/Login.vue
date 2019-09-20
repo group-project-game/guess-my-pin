@@ -1,8 +1,8 @@
 <template>
   <div class="login">
     <img src="../assets/logoa.png">
-    <form @submit.prevent="">
-      <input type="text" placeholder="Your name...">
+    <form @submit.prevent="signin">
+      <input type="text" placeholder="Your name..." v-model="username">
       <button type="submit">SIGNIN</button>
     </form>
   </div>
@@ -10,13 +10,21 @@
 
 <script>
 export default {
-
+  name: 'Login',
+  data() {
+    return {
+      username: ''
+    }
+  },
+  methods: {
+    signin() {
+      this.$store.commit('login', this.username)
+    }
+  }
 }
 </script>
 
 <style scoped>
-
-@import url('https://fonts.googleapis.com/css?family=Squada+One&display=swap');
 
 .login img{
   width: 250px;
