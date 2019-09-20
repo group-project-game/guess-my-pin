@@ -7,6 +7,7 @@ import router from './router'
 
 Vue.use(Vuex)
 
+
 export default new Vuex.Store({
   state: {
     rooms: [],
@@ -37,20 +38,10 @@ export default new Vuex.Store({
   },
   actions: {
     createRoom({commit}, payload) {
-      console.log("masuk ke store")
-      let master= localStorage.getItem('username')
-      console.log(payload)
-      console.log(master)
       let player = {
         username:localStorage.getItem('username'),
         score:0
       }
-      //commit('addRoom', payload)
-      // let dict = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-      // let randomId = ''
-      // for (let i = 0; i < 10; i++) {
-      //   randomId += dict[Math.floor(Math.random() * dict.length)]
-      // }
       db.collection('room')
         .add({
           name: payload.roomName,
@@ -60,7 +51,6 @@ export default new Vuex.Store({
           standby: false
         })
         .then(function (docRef) {
-          // console.log(docRef, 'ini roomnya <<<<<<<<<<<<<<<<<')
           Swal.close();
           Swal.fire({
             title: "Successfully Create",
@@ -68,8 +58,8 @@ export default new Vuex.Store({
             type: "success",
             timer: 2000,
             showConfirmButton: false
-          });
-          //commit("fillRoomId", docRef.id)
+          })
+          router.push(`/game/${docRef.id}`)
         })
         .catch(err => {
           console.log(err)

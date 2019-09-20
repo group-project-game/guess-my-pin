@@ -21,7 +21,6 @@ export default {
   created() {
     //this.$store.dispatch('fillPlayer', this.$route.params.id)
     this.$store.dispatch("findRoomState", this.$route.params.id);
-    console.log(this.$route.params);
     this.playSound()
   },
   methods: {

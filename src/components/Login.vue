@@ -13,7 +13,8 @@ export default {
   name: 'Login',
   data() {
     return {
-      username: ''
+      username: '',
+      password: ''
     }
   },
   methods: {

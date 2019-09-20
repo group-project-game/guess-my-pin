@@ -5,8 +5,12 @@
       <button @click="toggleAddRoomForm">Create room</button>
       <AddRoom v-if="isShowAdd" @close="toggleAddRoomForm"></AddRoom>
     </div>
-    <div class="roomlist">
-      <RoomList></RoomList>
+    <div class="room-content">
+      <RoomCard
+        v-for="(room, index) in $store.state.rooms"
+        :key="index"
+        :room="room">
+      </RoomCard>
     </div>
   </div>
 </template>
@@ -14,7 +18,7 @@
 <script>
 
 import RoomCard from '../components/RoomCard.vue'
-import RoomList from '../components/RoomList.vue'
+// import RoomList from '../components/RoomList.vue'
 import AddRoom from '../components/AddRoom.vue'
 
 export default {
@@ -22,7 +26,7 @@ export default {
   components: {
     RoomCard,
     AddRoom,
-    RoomList
+    // RoomList
   },
   data() {
     return {
@@ -33,6 +37,14 @@ export default {
     toggleAddRoomForm() {
       this.isShowAdd = !this.isShowAdd
     }
+  },
+  computed: {
+    rooms() {
+      return this.$store.state.rooms
+    }
+  },
+  created() {
+    this.$store.dispatch("getAllRooms");
   }
 }
 </script>
