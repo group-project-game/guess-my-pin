@@ -16,9 +16,10 @@ export default {
     data() {
         return {
             pin : '808080',
-            answer : ''
+
         }
-    }
+    },
+    props : ['answer']
 }
 </script>
 

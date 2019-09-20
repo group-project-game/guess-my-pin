@@ -2,8 +2,8 @@
 <div class="background">
   <div class="mechine">
       <div class="game">
-      <Atm></Atm>
-      <Keyboard></Keyboard>
+      <Atm :answer='answer' ></Atm>
+      <Keyboard @beforeSubmit="playing" @submit="check"></Keyboard>
       </div>
       <div class="ornament">
           <Fancy></Fancy>
@@ -18,6 +18,11 @@ import Keyboard from '../components/Keyboard.vue'
 import Fancy from '../components/Fancy.vue'
 
 export default {
+  data() {
+    return {
+      answer : ''
+    }
+  },
   created() {
     //this.$store.dispatch('fillPlayer', this.$route.params.id)
     this.$store.dispatch("findRoomState", this.$route.params.id);
@@ -35,6 +40,15 @@ export default {
         false
       );
       audio.play();
+    },
+    playing(input){
+      this.answer = input
+    },
+    check(){
+      // if (this.answer === '000'){
+      //   console.log(true) 
+      // }
+        this.answer = ''
     }
   },
   components : {

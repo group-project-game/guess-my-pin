@@ -2,30 +2,48 @@
 <div class="wrapper">
   <div class="keyboard">
       <div>
-      <button value="1">1</button>
-      <button value="2">2</button>
-      <button value="3">3</button>
+      <button @click="clickKey(1)">1</button>
+      <button @click="clickKey(2)">2</button>
+      <button @click="clickKey(3)">3</button>
       </div>
       <div>
-      <button value="4">4</button>
-      <button value="5">5</button>
-      <button value="6">6</button>
+      <button @click="clickKey(4)">4</button>
+      <button @click="clickKey(5)">5</button>
+      <button @click="clickKey(6)">6</button>
       </div>
       <div>
-      <button value="7">7</button>
-      <button value="8">8</button>
-      <button value="9">9</button>
+      <button @click="clickKey(7)">7</button>
+      <button @click="clickKey(8)">8</button>
+      <button @click="clickKey(9)">9</button>
+      </div>
+      <div>
+      <button @click="clickKey(0)">0</button>
       </div>
   </div>
   <div class="submit">
-      <button name="submit">Submit</button>
+      <button name="submit" @click="submitAnswer">Submit</button>
   </div>
 </div>
 </template>
 
 <script>
 export default {
-
+    data() {
+        return {
+            answer : ''
+        }
+    },
+    methods: {
+        clickKey(value){
+            this.answer += value
+            this.$emit('beforeSubmit', this.answer)
+            console.log('here', this.answer);
+        },
+        submitAnswer(){
+            this.$emit('submit')
+            this.answer = ''
+        }
+    },
 }
 </script>
 
@@ -42,7 +60,8 @@ export default {
     border-radius: 20px 
 }
 button[name="submit"]{
-    width: 150px
+    width: 150px;
+    height: 60px;
 }
 .keyboard{
     display: flex;
@@ -51,7 +70,7 @@ button[name="submit"]{
     flex-direction: column;
 }
 button{
-    height: 60px;
+    height: 50px;
     width: 65px;
     border-radius: 10px;
     margin : 5px;
