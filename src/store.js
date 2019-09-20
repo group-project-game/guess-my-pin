@@ -124,6 +124,7 @@ export default new Vuex.Store({
       db.collection('room').doc(payload.roomId).get()
       .then(doc =>{
         if(doc.data().key == payload.roomKey){
+          router.push(`/game/${payload.roomId}`)
           return db.collection('room').doc(payload.roomId).update({
             players: firebase.firestore.FieldValue.arrayUnion(player)
           })

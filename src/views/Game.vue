@@ -27,6 +27,7 @@ import Keyboard from '../components/Keyboard.vue'
 import Fancy from '../components/Fancy.vue'
 import Score from '../components/Score.vue'
 import db from '../apis/firebase'
+import swal from 'sweetalert2'
 
 export default {
   name: 'Game',
@@ -53,7 +54,7 @@ export default {
   },
   methods: {
     playSound() {
-      let audio = new Audio(require("../assets/bg-2.mp3"));
+      let audio = new Audio(require("../assets/bgk.mp3"))
       audio.addEventListener(
         "ended",
         function() {
@@ -75,6 +76,8 @@ export default {
       let pinNow = this.pinlist[this.index]
       if (pinNow == this.answer){
         this.result = true
+        let audio = new Audio(require("../assets/win.mp3"));
+        audio.play()
         for(let i=0;i<this.players.length;i++) {
           if(this.players[i].username == localStorage.getItem('username')) {
             this.players[i].score ++
@@ -94,13 +97,28 @@ export default {
       }
       else {
         this.result = false
-        console.log('salahhhh')
+        let audio = new Audio(require("../assets/police.flac"));
+        audio.play()
       }
-      // if (this.answer === '000'){
-      //   console.log(true) 
-      // }
-      this.index++
-        this.answer = ''
+      if(this.index >= 4) {
+        let uang = 0;
+        for(let i=0;i<this.players.length;i++) {
+          if(this.players[i].username == localStorage.getItem('username')) {
+            uang = this.players[i].score * 100000
+          }
+        }
+        swal.fire({
+          title: `Congratulation you steal Rp. ${uang.toLocaleString('id-IDR')}`,
+          timer: 4000,
+          imageUrl: 'https://media1.giphy.com/media/1TCK4mMFT8k6n1PU1S/giphy.gif',
+          imageWidth: 400,
+          showConfirmButton: false
+        })
+        this.$router.push('/room')
+      }else{
+        this.index++
+      }
+      this.answer = ''
     }
   },
   components : {
@@ -147,7 +165,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0,0,0,.7);
+  background-color: rgba(0,0,0,.4);
 }
 .result{
   position: absolute;
